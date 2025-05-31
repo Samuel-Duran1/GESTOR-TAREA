@@ -10,53 +10,40 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
-      font-family: 'Inter', 'Orbitron', Arial, sans-serif;
-      color: #fff;
-      overflow-x: hidden;
-      animation: bgmove 10s infinite alternate linear;
-    }
-    @keyframes bgmove {
-      0% { background-position: 0 0; }
-      100% { background-position: 100vw 100vh; }
+      background: linear-gradient(135deg, #f5f7fa 0%, #2563eb 100%);
+      font-family: 'Inter', Arial, sans-serif;
+      color: #18181b;
     }
     header {
       text-align: center;
       padding: 2.5rem 1rem 1.2rem 1rem;
-      background: rgba(0,0,0,0.25);
-      border-bottom: 4px solid #fff;
-      box-shadow: 0 8px 32px 0 rgba(127,0,255,0.18);
+      background: #fff;
+      border-bottom: 3px solid #2563eb;
+      box-shadow: 0 4px 24px 0 rgba(37,99,235,0.07);
     }
-
     header h1 {
-      font-family: 'Orbitron', 'Inter', Arial, sans-serif;
-      font-size: 2.7rem;
-      color: #fffb00;
-      text-shadow: 0 0 12px #e100ff, 0 0 24px #7f00ff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 2.5rem;
+      color: #18181b;
       margin: 0;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 2px;
-      animation: neon 1.5s infinite alternate;
-    }
-    @keyframes neon {
-      from { text-shadow: 0 0 12px #e100ff, 0 0 24px #7f00ff; }
-      to { text-shadow: 0 0 32px #fffb00, 0 0 40px #e100ff; }
     }
     header p {
-      color: #fff8;
+      color: #2563eb;
       margin: 0.7rem 0 0 0;
       font-size: 1.2rem;
-      text-shadow: 0 0 8px #e100ff;
+      font-weight: 600;
     }
     .container {
       max-width: 520px;
       margin: 2.5rem auto;
-      background: rgba(255,255,255,0.13);
-      border-radius: 22px;
-      box-shadow: 0 8px 32px 0 rgba(127,0,255,0.25);
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(37,99,235,0.10);
       padding: 2.2rem 1.7rem 1.7rem 1.7rem;
       position: relative;
-      border: 2.5px solid #fff3;
+      border: 2px solid #e0e7ef;
       z-index: 2;
       overflow: hidden;
     }
@@ -94,8 +81,8 @@
       position: relative;
     }
     .tabs button {
-      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
-      color: #7f00ff;
+      background: #f1f5fd;
+      color: #2563eb;
       font-weight: 700;
       border: none;
       border-bottom: 3px solid transparent;
@@ -103,15 +90,15 @@
       font-size: 1.1rem;
       cursor: pointer;
       border-radius: 12px 12px 0 0;
-      box-shadow: 0 2px 12px 0 #e100ff44;
+      box-shadow: 0 2px 8px 0 #2563eb11;
       transition: color 0.2s, border 0.2s, background 0.2s, box-shadow 0.2s;
       letter-spacing: 1px;
     }
     .tabs button.active, .tabs button:hover {
       color: #fff;
-      border-bottom: 3px solid #fffb00;
-      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
-      box-shadow: 0 4px 16px 0 #fffb0044;
+      border-bottom: 3px solid #2563eb;
+      background: linear-gradient(90deg, #2563eb 60%, #1d4ed8 100%);
+      box-shadow: 0 4px 16px 0 #2563eb22;
       transform: scale(1.06);
     }
     form {
@@ -122,29 +109,29 @@
       z-index: 2;
       position: relative;
     }
-    input, select {
+    input, select, textarea {
       font-size: 1.05rem;
       padding: 0.8rem;
       border-radius: 10px;
-      border: 2px solid #e100ff44;
+      border: 2px solid #e0e7ef;
       outline: none;
-      background: #fff9;
-      color: #7f00ff;
+      background: #f8fafc;
+      color: #18181b;
       font-family: 'Inter', Arial, sans-serif;
       font-weight: 600;
       transition: border 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px 0 #e100ff22;
+      box-shadow: 0 2px 8px 0 #2563eb11;
     }
-    input:focus, select:focus {
-      border: 2px solid #fffb00;
+    input:focus, select:focus, textarea:focus {
+      border: 2px solid #2563eb;
       background: #fff;
-      box-shadow: 0 4px 16px 0 #fffb0044;
+      box-shadow: 0 4px 16px 0 #2563eb22;
     }
     label {
       font-weight: 700;
-      color: #fffb00;
+      color: #2563eb;
       font-size: 1.05rem;
-      text-shadow: 0 0 6px #e100ff;
+      letter-spacing: 0.5px;
     }
     .tareas-lista {
       list-style: none;
@@ -154,16 +141,16 @@
       position: relative;
     }
     .tareas-lista li {
-      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
-      color: #7f00ff;
+      background: #f8fafc;
+      color: #18181b;
       margin-bottom: 1.1rem;
       padding: 1.1rem 1.1rem 0.8rem 1.1rem;
       border-radius: 14px;
       font-size: 1.05rem;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 2px 12px 0 #e100ff33;
-      border: 2px solid #fff6;
+      box-shadow: 0 2px 12px 0 #2563eb11;
+      border: 2px solid #e0e7ef;
       position: relative;
       gap: 0.3rem;
       font-weight: 600;
@@ -179,7 +166,7 @@
       margin-top: 0.5rem;
     }
     .tareas-lista button {
-      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      background: linear-gradient(90deg, #2563eb 60%, #1d4ed8 100%);
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -187,18 +174,18 @@
       font-size: 1.05rem;
       cursor: pointer;
       font-weight: 700;
-      box-shadow: 0 2px 12px 0 #e100ff44;
+      box-shadow: 0 2px 12px 0 #2563eb22;
       transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
       letter-spacing: 1px;
     }
     .tareas-lista button:hover {
-      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
-      color: #7f00ff;
-      box-shadow: 0 4px 16px 0 #fffb0044;
+      background: linear-gradient(90deg, #1d4ed8 60%, #2563eb 100%);
+      color: #fff;
+      box-shadow: 0 4px 16px 0 #2563eb33;
       transform: translateY(-2px) scale(1.07);
     }
     .main-btn, .main-btn:visited {
-      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      background: linear-gradient(90deg, #2563eb 60%, #1d4ed8 100%);
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -207,20 +194,20 @@
       font-weight: 700;
       cursor: pointer;
       margin-top: 0.2rem;
-      box-shadow: 0 2px 12px 0 #e100ff44;
+      box-shadow: 0 2px 12px 0 #2563eb22;
       transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
       letter-spacing: 1px;
     }
     .main-btn:hover {
-      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
-      color: #7f00ff;
-      box-shadow: 0 4px 16px 0 #fffb0044;
+      background: linear-gradient(90deg, #1d4ed8 60%, #2563eb 100%);
+      color: #fff;
+      box-shadow: 0 4px 16px 0 #2563eb33;
       transform: translateY(-2px) scale(1.07);
     }
     .logout-btn {
-      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
-      color: #7f00ff;
-      border: 2px solid #fff6;
+      background: #fff;
+      color: #2563eb;
+      border: 2px solid #2563eb;
       border-radius: 10px;
       padding: 0.6rem 1.3rem;
       font-size: 1.05rem;
@@ -228,51 +215,50 @@
       margin-bottom: 1.5rem;
       margin-left: auto;
       display: block;
-      box-shadow: 0 2px 12px 0 #e100ff44;
+      box-shadow: 0 2px 12px 0 #2563eb11;
       font-weight: 700;
       transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
       letter-spacing: 1px;
     }
     .logout-btn:hover {
-      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      background: #2563eb;
       color: #fff;
-      border: 2px solid #fffb00;
-      box-shadow: 0 4px 16px 0 #fffb0044;
+      border: 2px solid #1d4ed8;
+      box-shadow: 0 4px 16px 0 #2563eb33;
       transform: translateY(-2px) scale(1.07);
     }
     .cambiar-pass {
-      color: #fffb00;
+      color: #2563eb;
       text-decoration: underline;
       cursor: pointer;
       margin-top: 1rem;
       display: inline-block;
       font-size: 1.01rem;
       font-weight: 700;
-      text-shadow: 0 0 6px #e100ff;
       transition: color 0.2s;
     }
     .cambiar-pass:hover {
-      color: #fff;
+      color: #18181b;
     }
     .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(127,0,255,0.18);
+      background: rgba(37,99,235,0.10);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 100;
     }
     .modal-content {
-      background: rgba(255,255,255,0.95);
+      background: #fff;
       padding: 2.2rem 1.7rem 1.7rem 1.7rem;
       border-radius: 18px;
-      box-shadow: 0 8px 32px 0 #e100ff33;
+      box-shadow: 0 8px 32px 0 #2563eb22;
       min-width: 320px;
-      color: #7f00ff;
+      color: #18181b;
       position: relative;
       max-width: 95vw;
-      border: 2px solid #fffb00;
+      border: 2px solid #2563eb;
       font-weight: 600;
     }
     .close-modal {
@@ -280,38 +266,97 @@
       top: 10px; right: 20px;
       background: none;
       border: none;
-      color: #e100ff;
+      color: #2563eb;
       font-size: 2rem;
       cursor: pointer;
       transition: color 0.2s;
-      text-shadow: 0 0 8px #fffb00;
     }
     .close-modal:hover {
-      color: #fffb00;
+      color: #18181b;
     }
     .error {
-      color: #e100ff;
-      background: #fffb0033;
+      color: #fff;
+      background: #2563eb;
       border-radius: 8px;
       padding: 0.5rem 1rem;
       margin-bottom: 1rem;
       text-align: center;
       font-weight: 700;
       font-size: 1rem;
-      text-shadow: 0 0 6px #fff;
-      border: 1.5px solid #e100ff;
+      border: 1.5px solid #1d4ed8;
     }
     .hidden { display: none !important; }
     footer {
       text-align: center;
-      color: #fff8;
+      color: #2563eb;
       margin-top: 3rem;
       font-size: 1.08rem;
       letter-spacing: 1px;
       background: none;
       border: none;
       box-shadow: none;
-      text-shadow: 0 0 8px #e100ff;
+      font-weight: 600;
+    }
+    .tag {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 6px;
+      padding: 0.2em 0.7em;
+      font-size: 0.95em;
+      font-weight: 700;
+      margin-right: 0.4em;
+      margin-bottom: 0.2em;
+      box-shadow: 0 1px 4px 0 #2563eb22;
+      border: 1.5px solid #1d4ed8;
+    }
+    .subtarea-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      margin-bottom: 0.3em;
+    }
+    .subtarea-item input[type="checkbox"] {
+      accent-color: #2563eb;
+      width: 1.1em;
+      height: 1.1em;
+    }
+    .markdown {
+      background: #f1f5fd;
+      color: #18181b;
+      border-radius: 8px;
+      padding: 0.7em 1em;
+      margin: 0.5em 0;
+      font-size: 1em;
+      font-family: 'Inter', Arial, sans-serif;
+      white-space: pre-line;
+      box-shadow: 0 1px 4px 0 #2563eb11;
+    }
+    .add-tag-btn, .add-sub-btn {
+      background: none;
+      color: #2563eb;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      font-weight: 700;
+      margin-left: 0.3em;
+      transition: color 0.2s;
+    }
+    .add-tag-btn:hover, .add-sub-btn:hover {
+      color: #1d4ed8;
+    }
+    .remove-tag-btn, .remove-sub-btn {
+      background: none;
+      color: #2563eb;
+      border: none;
+      font-size: 1.1em;
+      cursor: pointer;
+      font-weight: 700;
+      margin-left: 0.2em;
+      transition: color 0.2s;
+    }
+    .remove-tag-btn:hover, .remove-sub-btn:hover {
+      color: #18181b;
     }
   </style>
 </head>
@@ -341,6 +386,10 @@
         <input type="text" id="register-user" required autocomplete="username">
         <label for="register-pass">Contraseña</label>
         <input type="password" id="register-pass" required autocomplete="new-password">
+        <label for="register-question">Pregunta de seguridad</label>
+        <input type="text" id="register-question" required placeholder="Ej: ¿Nombre de tu primera mascota?">
+        <label for="register-answer">Respuesta de seguridad</label>
+        <input type="text" id="register-answer" required placeholder="Respuesta secreta">
         <button type="submit" class="main-btn">Crear cuenta</button>
       </form>
     </div>
@@ -366,7 +415,20 @@
     <div id="modal-pass" class="modal hidden">
       <div class="modal-content">
         <button class="close-modal" id="close-modal-pass">&times;</button>
-        <form id="change-pass-form">
+        <form id="security-question-form">
+          <div id="security-question-error" class="error hidden"></div>
+          <label for="user-for-question">Usuario</label>
+          <input type="text" id="user-for-question" required autocomplete="username">
+          <div id="show-question-section" class="hidden" style="margin-bottom:1.2em;">
+            <div style="color:#e100ff;font-weight:700;font-size:1.1em;">Pregunta: <span id="security-question" style="background:#fffb00;color:#e100ff;padding:0.2em 0.7em;border-radius:6px;letter-spacing:1px;"></span></div>
+          </div>
+          <div id="answer-section" class="hidden">
+            <label for="security-answer">Respuesta</label>
+            <input type="text" id="security-answer" required autocomplete="off">
+            <button type="button" class="main-btn" id="verify-answer-btn">Verificar respuesta</button>
+          </div>
+        </form>
+        <form id="change-pass-form" class="hidden">
           <div id="change-pass-error" class="error hidden"></div>
           <label for="new-pass">Nueva contraseña</label>
           <input type="password" id="new-pass" required autocomplete="new-password">
@@ -379,16 +441,26 @@
         <button class="close-modal" id="close-modal-editar">&times;</button>
         <form id="editar-tarea-form">
           <div id="editar-tarea-error" class="error hidden"></div>
-          <label for="editar-texto">Tarea</label>
-          <input type="text" id="editar-texto" required>
-          <label for="editar-categoria">Categoría</label>
-          <input type="text" id="editar-categoria" required>
-          <label for="editar-estado">Estado</label>
-          <select id="editar-estado">
-            <option value="Por hacer">Por hacer</option>
-            <option value="En progreso">En progreso</option>
-            <option value="Completada">Completada</option>
+          <label for="editar-titulo">Título</label>
+          <input type="text" id="editar-titulo" required>
+          <label for="editar-desc">Descripción (Markdown soportado)</label>
+          <textarea id="editar-desc" rows="3" style="resize:vertical;min-height:60px;"></textarea>
+          <label>Subtareas</label>
+          <div id="subtareas-list"></div>
+          <input type="text" id="nueva-subtarea" placeholder="Nueva subtarea...">
+          <button type="button" class="add-sub-btn" id="add-subtarea">+ Añadir subtarea</button>
+          <label>Etiquetas</label>
+          <div id="tags-list"></div>
+          <input type="text" id="nueva-tag" placeholder="Nueva etiqueta...">
+          <button type="button" class="add-tag-btn" id="add-tag">+ Añadir etiqueta</button>
+          <label for="editar-prioridad">Prioridad</label>
+          <select id="editar-prioridad">
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
           </select>
+          <label for="editar-fecha">Fecha de vencimiento</label>
+          <input type="date" id="editar-fecha">
           <button type="submit" class="main-btn">Guardar cambios</button>
         </form>
       </div>
@@ -405,6 +477,8 @@
     const LS_TAREAS = 'gestor_tareas';
     let usuarioActual = null;
     let tareaEditando = null;
+    let tempCode = null;
+    let tempUser = null;
 
     function getUsers() {
       return JSON.parse(localStorage.getItem(LS_USERS) || '[]');
@@ -442,12 +516,14 @@
       e.preventDefault();
       const user = document.getElementById('register-user').value.trim();
       const pass = document.getElementById('register-pass').value;
+      const question = document.getElementById('register-question').value.trim();
+      const answer = document.getElementById('register-answer').value.trim().toLowerCase();
       let users = getUsers();
       if (users.find(u => u.user === user)) {
         showError('register-error', 'El usuario ya existe');
         return;
       }
-      users.push({ user, pass });
+      users.push({ user, pass, question, answer });
       setUsers(users);
       showError('register-error', '¡Cuenta creada! Ahora inicia sesión.', true);
       setTimeout(() => {
@@ -532,9 +608,10 @@
     window.editarTarea = function(idx) {
       let tareas = getTareas().filter(t => t.usuario === usuarioActual);
       tareaEditando = tareas[idx];
-      document.getElementById('editar-texto').value = tareaEditando.texto;
-      document.getElementById('editar-categoria').value = tareaEditando.categoria;
-      document.getElementById('editar-estado').value = tareaEditando.estado;
+      document.getElementById('editar-titulo').value = tareaEditando.titulo;
+      document.getElementById('editar-desc').value = tareaEditando.desc;
+      document.getElementById('editar-prioridad').value = tareaEditando.prioridad;
+      document.getElementById('editar-fecha').value = tareaEditando.fecha;
       document.getElementById('modal-editar').classList.remove('hidden');
     };
     document.getElementById('close-modal-editar').onclick = function() {
@@ -550,13 +627,14 @@
     document.getElementById('editar-tarea-form').onsubmit = function(e) {
       e.preventDefault();
       if (!tareaEditando) return;
-      const nuevoTexto = document.getElementById('editar-texto').value.trim();
-      const nuevaCategoria = document.getElementById('editar-categoria').value.trim();
-      const nuevoEstado = document.getElementById('editar-estado').value;
+      const nuevoTitulo = document.getElementById('editar-titulo').value.trim();
+      const nuevaDescripcion = document.getElementById('editar-desc').value.trim();
+      const nuevaPrioridad = document.getElementById('editar-prioridad').value;
+      const nuevaFecha = document.getElementById('editar-fecha').value;
       let todas = getTareas();
       todas = todas.map(t => {
         if (t.usuario === usuarioActual && t.texto === tareaEditando.texto && t.fecha === tareaEditando.fecha) {
-          return { ...t, texto: nuevoTexto, categoria: nuevaCategoria, estado: nuevoEstado };
+          return { ...t, titulo: nuevoTitulo, desc: nuevaDescripcion, prioridad: nuevaPrioridad, fecha: nuevaFecha };
         }
         return t;
       });
@@ -569,11 +647,17 @@
     // --- Cambiar contraseña ---
     function showModalPass() {
       document.getElementById('modal-pass').classList.remove('hidden');
+      document.getElementById('security-question-form').classList.remove('hidden');
+      document.getElementById('show-question-section').classList.add('hidden');
+      document.getElementById('answer-section').classList.add('hidden');
+      document.getElementById('change-pass-form').classList.add('hidden');
+      hideError('security-question-error');
+      hideError('change-pass-error');
+      document.getElementById('security-question-form').reset();
+      document.getElementById('change-pass-form').reset();
     }
     function closeModalPass() {
       document.getElementById('modal-pass').classList.add('hidden');
-      document.getElementById('change-pass-form').reset();
-      hideError('change-pass-error');
     }
     document.getElementById('show-change-pass').onclick = showModalPass;
     document.getElementById('show-change-pass-main').onclick = showModalPass;
@@ -581,11 +665,44 @@
     document.getElementById('modal-pass').onclick = function(e) {
       if (e.target === this) closeModalPass();
     };
+    let userForRecovery = null;
+    document.getElementById('user-for-question').onblur = function() {
+      const user = this.value.trim();
+      let users = getUsers();
+      const found = users.find(u => u.user === user);
+      if (found) {
+        document.getElementById('security-question').textContent = found.question;
+        document.getElementById('show-question-section').classList.remove('hidden');
+        document.getElementById('answer-section').classList.remove('hidden');
+        userForRecovery = found;
+      } else {
+        document.getElementById('show-question-section').classList.add('hidden');
+        document.getElementById('answer-section').classList.add('hidden');
+        userForRecovery = null;
+      }
+    };
+    document.getElementById('verify-answer-btn').onclick = function() {
+      const answer = document.getElementById('security-answer').value.trim().toLowerCase();
+      if (!userForRecovery) {
+        showError('security-question-error', 'Usuario no encontrado');
+        return;
+      }
+      if (answer !== userForRecovery.answer) {
+        showError('security-question-error', 'Respuesta incorrecta');
+        return;
+      }
+      document.getElementById('security-question-form').classList.add('hidden');
+      document.getElementById('change-pass-form').classList.remove('hidden');
+    };
     document.getElementById('change-pass-form').onsubmit = function(e) {
       e.preventDefault();
+      if (!userForRecovery) {
+        showError('change-pass-error', 'Usuario no encontrado');
+        return;
+      }
       const newPass = document.getElementById('new-pass').value;
       let users = getUsers();
-      let idx = users.findIndex(u => u.user === (usuarioActual || document.getElementById('login-user').value.trim()));
+      let idx = users.findIndex(u => u.user === userForRecovery.user);
       if (idx === -1) {
         showError('change-pass-error', 'Usuario no encontrado');
         return;
