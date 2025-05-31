@@ -28,11 +28,19 @@
       margin: 0;
       font-weight: 800;
       letter-spacing: 2px;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      background-clip: initial;
+    }
+    #user-avatar-header {
+      margin: 1.2em 0 0.5em 0 !important;
     }
     header p {
       color: #2563eb;
-      margin: 0.7rem 0 0 0;
-      font-size: 1.2rem;
+      margin: 0.7rem 0 0 0 !important;
+      font-size: 1.2rem !important;
       font-weight: 600;
     }
     .container {
@@ -90,6 +98,7 @@
       font-size: 1.1rem;
       cursor: pointer;
       border-radius: 12px 12px 0 0;
+
       box-shadow: 0 2px 8px 0 #2563eb11;
       transition: color 0.2s, border 0.2s, background 0.2s, box-shadow 0.2s;
       letter-spacing: 1px;
@@ -252,14 +261,28 @@
     .modal-content {
       background: #fff;
       padding: 2.2rem 1.7rem 1.7rem 1.7rem;
-      border-radius: 18px;
-      box-shadow: 0 8px 32px 0 #2563eb22;
-      min-width: 320px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 #2563eb33, 0 1.5px 0 #2563eb;
       color: #18181b;
       position: relative;
-      max-width: 95vw;
-      border: 2px solid #2563eb;
-      font-weight: 600;
+      max-width: 98vw;
+      width: 100%;
+      min-width: 320px;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 3px solid #2563eb;
+      font-weight: 700;
+      animation: aparecer 0.7s cubic-bezier(.4,2,.6,1) both;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    @media (max-width: 600px) {
+      .modal-content {
+        padding: 1.2rem 0.7rem 1rem 0.7rem;
+        min-width: 0;
+        max-width: 98vw;
+      }
     }
     .close-modal {
       position: absolute;
@@ -358,11 +381,116 @@
     .remove-tag-btn:hover, .remove-sub-btn:hover {
       color: #18181b;
     }
+    /* Animación para modal */
+    #modal-editar.animated-modal {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s, transform 0.4s;
+      opacity: 0;
+      transform: scale(0.97);
+    }
+    #modal-editar.animated-modal:not(.hidden) {
+      display: flex !important;
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* Fondo animado de burbujas/partículas */
+    #bg-bubbles {
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb 60%, #1d4ed8 100%);
+      opacity: 0.18;
+      animation: bubble-move 18s linear infinite;
+    }
+    @keyframes bubble-move {
+      0% { transform: translateY(100vh) scale(0.7); opacity: 0.18; }
+      80% { opacity: 0.22; }
+      100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+    }
+    /* Glassmorphism para tarjetas y modales */
+    .container, .modal-content {
+      background: rgba(255,255,255,0.85) !important;
+      backdrop-filter: blur(12px) !important;
+      box-shadow: 0 8px 32px 0 #2563eb33, 0 1.5px 0 #2563eb;
+      border: 3px solid #2563eb33;
+    }
+    /* Neumorphism para botones principales */
+    .main-btn, .logout-btn, .tareas-lista button {
+      box-shadow: 0 4px 16px 0 #2563eb22, 0 1.5px 0 #fff, 0 1.5px 0 #2563eb inset;
+      border: none !important;
+    }
+    .main-btn:active, .logout-btn:active, .tareas-lista button:active {
+      box-shadow: 0 2px 8px 0 #2563eb33 inset, 0 1.5px 0 #2563eb;
+    }
+    /* Hover 3D y pulse */
+    .main-btn, .logout-btn, .tareas-lista button {
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s, color 0.2s;
+    }
+    .main-btn:hover, .logout-btn:hover, .tareas-lista button:hover {
+      transform: scale(1.08) rotate(-1deg);
+      box-shadow: 0 8px 32px 0 #2563eb44, 0 1.5px 0 #2563eb;
+    }
+    .main-btn.pulse {
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 #2563eb44; }
+      70% { box-shadow: 0 0 0 12px #2563eb11; }
+      100% { box-shadow: 0 0 0 0 #2563eb44; }
+    }
+    /* Fade/slide animaciones */
+    .fade-in {
+      animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    /* Pie de página decorado con ondas SVG */
+    footer {
+      position: relative;
+      z-index: 2;
+      background: none;
+      border: none;
+      box-shadow: none;
+      font-weight: 900;
+      text-shadow: 0 1px 0 #fff;
+      margin-bottom: 0;
+    }
+    #footer-wave {
+      position: absolute;
+      left: 0; bottom: 100%; width: 100%; height: 60px;
+      z-index: 1;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Pantalla de bienvenida animada -->
+  <div id="welcome-screen" style="position:fixed;z-index:2000;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#2563eb 0%,#fff 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.7s;">
+    <div style="text-align:center;">
+      <div style="font-size:4rem;color:#fff;font-weight:900;text-shadow:0 4px 32px #1d4ed8;letter-spacing:2px;">
+        <span style="font-size:5rem;vertical-align:middle;">📝</span>
+      </div>
+      <h1 style="font-size:2.7rem;color:#18181b;font-weight:900;letter-spacing:2px;margin:0 0 0.5em 0;text-shadow:0 2px 16px #fff,0 1px 0 #2563eb;">Gestor de Tareas</h1>
+      <p style="font-size:1.3rem;color:#2563eb;font-weight:700;margin-bottom:2em;">Organiza tu vida con estilo y tecnología</p>
+      <button id="start-btn" style="background:linear-gradient(90deg,#2563eb 60%,#1d4ed8 100%);color:#fff;font-size:1.3rem;font-weight:900;padding:1rem 3rem;border:none;border-radius:16px;box-shadow:0 4px 24px #2563eb55,0 1.5px 0 #fff;cursor:pointer;letter-spacing:2px;transition:background 0.2s,transform 0.15s;">Comenzar</button>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;width:100vw;height:30vh;pointer-events:none;">
+      <svg width="100%" height="100%" viewBox="0 0 1440 320"><path fill="#2563eb" fill-opacity="0.18" d="M0,224L48,202.7C96,181,192,139,288,144C384,149,480,203,576,197.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+    </div>
+  </div>
   <header>
     <h1>Gestor de Tareas</h1>
+    <div id="user-avatar-header" style="display:none;justify-content:center;align-items:center;margin:0.7em 0 0.3em 0;"></div>
     <p>¡Organiza tu vida con nosotros!</p>
   </header>
   <div class="container">
@@ -379,6 +507,7 @@
         <input type="password" id="login-pass" required autocomplete="current-password">
         <button type="submit" class="main-btn">Entrar</button>
         <span class="cambiar-pass" id="show-change-pass">¿Olvidaste tu contraseña?</span>
+        <button type="button" id="back-to-welcome-login" class="main-btn" style="margin-top:0.5em;background:linear-gradient(90deg,#fff 0%,#2563eb 100%);color:#2563eb;">Volver a inicio</button>
       </form>
       <form id="register-form" class="hidden">
         <div id="register-error" class="error hidden"></div>
@@ -391,6 +520,7 @@
         <label for="register-answer">Respuesta de seguridad</label>
         <input type="text" id="register-answer" required placeholder="Respuesta secreta">
         <button type="submit" class="main-btn">Crear cuenta</button>
+        <button type="button" id="back-to-welcome-register" class="main-btn" style="margin-top:0.5em;background:linear-gradient(90deg,#fff 0%,#2563eb 100%);color:#2563eb;">Volver a inicio</button>
       </form>
     </div>
     <div id="main-section" class="hidden">
@@ -468,7 +598,10 @@
   </div>
   <center>
     <footer>
-      Creado por <b>Samuel</b> 
+      <div id="footer-wave">
+        <svg width="100%" height="100%" viewBox="0 0 1440 320"><path fill="#2563eb" fill-opacity="0.18" d="M0,224L48,202.7C96,181,192,139,288,144C384,149,480,203,576,197.3C672,192,768,128,864,128C960,128,1056,192,1152,197.3C1248,203,1344,149,1392,122.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+      </div>
+      Creado por <b>Samuel</b>
     </footer>
   </center>
   <script>
@@ -545,6 +678,7 @@
       usuarioActual = user;
       document.getElementById('auth-section').classList.add('hidden');
       document.getElementById('main-section').classList.remove('hidden');
+      showUserAvatarHeader();
       renderTareas();
     };
 
@@ -553,6 +687,7 @@
       usuarioActual = null;
       document.getElementById('main-section').classList.add('hidden');
       document.getElementById('auth-section').classList.remove('hidden');
+      showUserAvatarHeader();
     };
 
     // --- Añadir tarea ---
@@ -582,9 +717,13 @@
       let tareas = getTareas().filter(t => t.usuario === usuarioActual);
       tareas.forEach((t, idx) => {
         const li = document.createElement('li');
+        li.classList.add('fade-in');
         li.innerHTML = `
-          <b>${t.texto}</b>
-          <span style="color:#888;font-size:0.97rem;">Categoría: ${t.categoria} | Estado: ${t.estado} | Fecha: ${t.fecha}</span>
+          <div style='display:flex;align-items:center;gap:0.7em;margin-bottom:0.5em;'>
+            ${getAvatarHTML(t.usuario,32)}
+            <b>${t.titulo || t.texto}</b>
+          </div>
+          <span style="color:#2563eb;font-size:0.97rem;">Categoría: ${t.categoria||''} | Estado: ${t.estado||''} | Prioridad: ${t.prioridad||''} | Fecha: ${t.fecha||''}</span>
           <div class='acciones'>
             <button onclick='editarTarea(${idx})'>Editar</button>
             <button onclick='eliminarTarea(${idx})'>Eliminar</button>
@@ -605,6 +744,16 @@
     };
 
     // --- Editar tarea (modal tipo Notion) ---
+    const modalEditar = document.getElementById('modal-editar');
+    modalEditar.classList.add('animated-modal');
+    modalEditar.style.backdropFilter = 'blur(6px)';
+    modalEditar.style.background = 'rgba(37,99,235,0.10)';
+    // Animación de entrada/salida
+    modalEditar.addEventListener('transitionend', function(){
+      if(modalEditar.classList.contains('hidden')){
+        modalEditar.style.display = 'none';
+      }
+    });
     window.editarTarea = function(idx) {
       let tareas = getTareas().filter(t => t.usuario === usuarioActual);
       tareaEditando = tareas[idx];
@@ -612,15 +761,18 @@
       document.getElementById('editar-desc').value = tareaEditando.desc;
       document.getElementById('editar-prioridad').value = tareaEditando.prioridad;
       document.getElementById('editar-fecha').value = tareaEditando.fecha;
-      document.getElementById('modal-editar').classList.remove('hidden');
+      modalEditar.style.display = 'flex';
+      setTimeout(()=>{modalEditar.classList.remove('hidden');},10);
     };
     document.getElementById('close-modal-editar').onclick = function() {
-      document.getElementById('modal-editar').classList.add('hidden');
+      modalEditar.classList.add('hidden');
+      setTimeout(()=>{modalEditar.style.display = 'none';},400);
       tareaEditando = null;
     };
     document.getElementById('modal-editar').onclick = function(e) {
       if (e.target === this) {
-        document.getElementById('modal-editar').classList.add('hidden');
+        modalEditar.classList.add('hidden');
+        setTimeout(()=>{modalEditar.style.display = 'none';},400);
         tareaEditando = null;
       }
     };
@@ -666,7 +818,7 @@
       if (e.target === this) closeModalPass();
     };
     let userForRecovery = null;
-    document.getElementById('user-for-question').onblur = function() {
+    document.getElementById('user-for-question').oninput = function() {
       const user = this.value.trim();
       let users = getUsers();
       const found = users.find(u => u.user === user);
@@ -675,6 +827,7 @@
         document.getElementById('show-question-section').classList.remove('hidden');
         document.getElementById('answer-section').classList.remove('hidden');
         userForRecovery = found;
+        document.getElementById('security-answer').focus();
       } else {
         document.getElementById('show-question-section').classList.add('hidden');
         document.getElementById('answer-section').classList.add('hidden');
@@ -724,6 +877,82 @@
     function hideError(id) {
       document.getElementById(id).classList.add('hidden');
     }
+
+    // Pantalla de bienvenida
+    window.addEventListener('DOMContentLoaded',()=>{
+      const welcome = document.getElementById('welcome-screen');
+      const startBtn = document.getElementById('start-btn');
+      startBtn.onclick = function(){
+        welcome.style.opacity = 0;
+        setTimeout(()=>{
+          welcome.style.display = 'none';
+          // Mostrar login/registro siempre al salir de bienvenida
+          document.getElementById('auth-section').classList.remove('hidden');
+          document.getElementById('main-section').classList.add('hidden');
+        }, 700);
+      };
+    });
+
+    // Función para crear avatar
+    function getAvatarHTML(user, size=44) {
+      const initial = user ? user[0].toUpperCase() : '?';
+      return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:linear-gradient(135deg,#2563eb 60%,#1d4ed8 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:${size*0.55}px;box-shadow:0 2px 8px #2563eb33;border:2.5px solid #fff;">${initial}</div>`;
+    }
+    // Mostrar avatar en header si hay usuario logueado
+    function showUserAvatarHeader() {
+      const avatarDiv = document.getElementById('user-avatar-header');
+      if (usuarioActual) {
+        avatarDiv.innerHTML = getAvatarHTML(usuarioActual, 56);
+        avatarDiv.style.display = 'flex';
+      } else {
+        avatarDiv.style.display = 'none';
+      }
+    }
+
+    // Fondo animado de burbujas/partículas
+    function createBubbles() {
+      const bg = document.getElementById('bg-bubbles');
+      for(let i=0;i<18;i++){
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        const size = 32 + Math.random()*64;
+        b.style.width = b.style.height = size+'px';
+        b.style.left = (Math.random()*100)+'vw';
+        b.style.bottom = '-'+(Math.random()*40)+'px';
+        b.style.animationDuration = (12+Math.random()*10)+'s';
+        b.style.opacity = 0.12+Math.random()*0.13;
+        bg.appendChild(b);
+      }
+    }
+    createBubbles();
+
+    // Cabecera sticky animada
+    window.addEventListener('scroll',()=>{
+      const header = document.querySelector('header');
+      if(window.scrollY>10){header.classList.add('sticky');}
+      else{header.classList.remove('sticky');}
+    });
+
+    // Pulse en el botón principal
+    window.addEventListener('DOMContentLoaded',()=>{
+      const btn = document.querySelector('.main-btn');
+      if(btn) btn.classList.add('pulse');
+    });
+
+    // Botón para volver a la pantalla de bienvenida
+    function showWelcomeScreen() {
+      const welcome = document.getElementById('welcome-screen');
+      welcome.style.display = 'flex';
+      welcome.style.opacity = 1;
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('main-section').classList.add('hidden');
+    }
+    document.getElementById('back-to-welcome-login').onclick = function() {
+      showWelcomeScreen();
+    };
+    document.getElementById('back-to-welcome-register').onclick = function() {
+      showWelcomeScreen();
+    };
   </script>
 </body>
 </html> 
