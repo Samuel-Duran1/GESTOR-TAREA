@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Tareas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #7f00ff 0%, #e100ff 100%);
+      font-family: 'Inter', 'Orbitron', Arial, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      animation: bgmove 10s infinite alternate linear;
+    }
+    @keyframes bgmove {
+      0% { background-position: 0 0; }
+      100% { background-position: 100vw 100vh; }
+    }
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem 1.2rem 1rem;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 4px solid #fff;
+      box-shadow: 0 8px 32px 0 rgba(127,0,255,0.18);
+    }
+
+    header h1 {
+      font-family: 'Orbitron', 'Inter', Arial, sans-serif;
+      font-size: 2.7rem;
+      color: #fffb00;
+      text-shadow: 0 0 12px #e100ff, 0 0 24px #7f00ff;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: neon 1.5s infinite alternate;
+    }
+    @keyframes neon {
+      from { text-shadow: 0 0 12px #e100ff, 0 0 24px #7f00ff; }
+      to { text-shadow: 0 0 32px #fffb00, 0 0 40px #e100ff; }
+    }
+    header p {
+      color: #fff8;
+      margin: 0.7rem 0 0 0;
+      font-size: 1.2rem;
+      text-shadow: 0 0 8px #e100ff;
+    }
+    .container {
+      max-width: 520px;
+      margin: 2.5rem auto;
+      background: rgba(255,255,255,0.13);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px 0 rgba(127,0,255,0.25);
+      padding: 2.2rem 1.7rem 1.7rem 1.7rem;
+      position: relative;
+      border: 2.5px solid #fff3;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .container::before, .container::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(30px);
+      opacity: 0.5;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .container::before {
+      width: 120px; height: 120px;
+      top: -40px; left: -40px;
+      background: radial-gradient(circle, #fffb00 0%, #e100ff 80%);
+      animation: girar 8s linear infinite;
+    }
+    .container::after {
+      width: 120px; height: 120px;
+      bottom: -40px; right: -40px;
+      background: radial-gradient(circle, #7f00ff 0%, #e100ff 80%);
+      animation: girar 10s linear infinite reverse;
+    }
+    @keyframes girar {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      z-index: 2;
+      position: relative;
+    }
+    .tabs button {
+      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
+      color: #7f00ff;
+      font-weight: 700;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 0.8rem 1.7rem 0.6rem 1.7rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 2px 12px 0 #e100ff44;
+      transition: color 0.2s, border 0.2s, background 0.2s, box-shadow 0.2s;
+      letter-spacing: 1px;
+    }
+    .tabs button.active, .tabs button:hover {
+      color: #fff;
+      border-bottom: 3px solid #fffb00;
+      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      box-shadow: 0 4px 16px 0 #fffb0044;
+      transform: scale(1.06);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      z-index: 2;
+      position: relative;
+    }
+    input, select {
+      font-size: 1.05rem;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: 2px solid #e100ff44;
+      outline: none;
+      background: #fff9;
+      color: #7f00ff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 600;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px 0 #e100ff22;
+    }
+    input:focus, select:focus {
+      border: 2px solid #fffb00;
+      background: #fff;
+      box-shadow: 0 4px 16px 0 #fffb0044;
+    }
+    label {
+      font-weight: 700;
+      color: #fffb00;
+      font-size: 1.05rem;
+      text-shadow: 0 0 6px #e100ff;
+    }
+    .tareas-lista {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      z-index: 2;
+      position: relative;
+    }
+    .tareas-lista li {
+      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
+      color: #7f00ff;
+      margin-bottom: 1.1rem;
+      padding: 1.1rem 1.1rem 0.8rem 1.1rem;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 12px 0 #e100ff33;
+      border: 2px solid #fff6;
+      position: relative;
+      gap: 0.3rem;
+      font-weight: 600;
+      animation: aparecer 0.5s;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .tareas-lista .acciones {
+      display: flex;
+      gap: 0.7rem;
+      margin-top: 0.5rem;
+    }
+    .tareas-lista button {
+      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 1.2rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 2px 12px 0 #e100ff44;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      letter-spacing: 1px;
+    }
+    .tareas-lista button:hover {
+      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
+      color: #7f00ff;
+      box-shadow: 0 4px 16px 0 #fffb0044;
+      transform: translateY(-2px) scale(1.07);
+    }
+    .main-btn, .main-btn:visited {
+      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 0;
+      font-size: 1.13rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.2rem;
+      box-shadow: 0 2px 12px 0 #e100ff44;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      letter-spacing: 1px;
+    }
+    .main-btn:hover {
+      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
+      color: #7f00ff;
+      box-shadow: 0 4px 16px 0 #fffb0044;
+      transform: translateY(-2px) scale(1.07);
+    }
+    .logout-btn {
+      background: linear-gradient(90deg, #fffb00 0%, #e100ff 100%);
+      color: #7f00ff;
+      border: 2px solid #fff6;
+      border-radius: 10px;
+      padding: 0.6rem 1.3rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      margin-left: auto;
+      display: block;
+      box-shadow: 0 2px 12px 0 #e100ff44;
+      font-weight: 700;
+      transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+      letter-spacing: 1px;
+    }
+    .logout-btn:hover {
+      background: linear-gradient(90deg, #e100ff 0%, #fffb00 100%);
+      color: #fff;
+      border: 2px solid #fffb00;
+      box-shadow: 0 4px 16px 0 #fffb0044;
+      transform: translateY(-2px) scale(1.07);
+    }
+    .cambiar-pass {
+      color: #fffb00;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 1rem;
+      display: inline-block;
+      font-size: 1.01rem;
+      font-weight: 700;
+      text-shadow: 0 0 6px #e100ff;
+      transition: color 0.2s;
+    }
+    .cambiar-pass:hover {
+      color: #fff;
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(127,0,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: rgba(255,255,255,0.95);
+      padding: 2.2rem 1.7rem 1.7rem 1.7rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 #e100ff33;
+      min-width: 320px;
+      color: #7f00ff;
+      position: relative;
+      max-width: 95vw;
+      border: 2px solid #fffb00;
+      font-weight: 600;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 20px;
+      background: none;
+      border: none;
+      color: #e100ff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-shadow: 0 0 8px #fffb00;
+    }
+    .close-modal:hover {
+      color: #fffb00;
+    }
+    .error {
+      color: #e100ff;
+      background: #fffb0033;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      text-shadow: 0 0 6px #fff;
+      border: 1.5px solid #e100ff;
+    }
+    .hidden { display: none !important; }
+    footer {
+      text-align: center;
+      color: #fff8;
+      margin-top: 3rem;
+      font-size: 1.08rem;
+      letter-spacing: 1px;
+      background: none;
+      border: none;
+      box-shadow: none;
+      text-shadow: 0 0 8px #e100ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gestor de Tareas</h1>
+    <p>¡Organiza tu vida con nosotros!</p>
+  </header>
+  <div class="container">
+    <div id="auth-section">
+      <div class="tabs">
+        <button id="login-tab" class="active">Iniciar sesión</button>
+        <button id="register-tab">Crear cuenta</button>
+      </div>
+      <form id="login-form">
+        <div id="login-error" class="error hidden"></div>
+        <label for="login-user">Usuario</label>
+        <input type="text" id="login-user" required autocomplete="username">
+        <label for="login-pass">Contraseña</label>
+        <input type="password" id="login-pass" required autocomplete="current-password">
+        <button type="submit" class="main-btn">Entrar</button>
+        <span class="cambiar-pass" id="show-change-pass">¿Olvidaste tu contraseña?</span>
+      </form>
+      <form id="register-form" class="hidden">
+        <div id="register-error" class="error hidden"></div>
+        <label for="register-user">Usuario</label>
+        <input type="text" id="register-user" required autocomplete="username">
+        <label for="register-pass">Contraseña</label>
+        <input type="password" id="register-pass" required autocomplete="new-password">
+        <button type="submit" class="main-btn">Crear cuenta</button>
+      </form>
+    </div>
+    <div id="main-section" class="hidden">
+      <button class="logout-btn" id="logout-btn">Cerrar sesión</button>
+      <h2 style="font-size:1.3rem;font-weight:600;color:#222;margin-bottom:1.2rem;">Mis tareas</h2>
+      <form id="tarea-form">
+        <label for="texto-tarea">Tarea</label>
+        <input type="text" id="texto-tarea" required placeholder="Escribe la tarea...">
+        <label for="categoria-tarea">Categoría</label>
+        <input type="text" id="categoria-tarea" required placeholder="Categoría (ej: trabajo, personal, etc.)">
+        <label for="estado-tarea">Estado</label>
+        <select id="estado-tarea">
+          <option value="Por hacer">Por hacer</option>
+          <option value="En progreso">En progreso</option>
+          <option value="Completada">Completada</option>
+        </select>
+        <button type="submit" class="main-btn">Añadir tarea</button>
+      </form>
+      <ul class="tareas-lista" id="lista-tareas"></ul>
+      <span class="cambiar-pass" id="show-change-pass-main">Cambiar contraseña</span>
+    </div>
+    <div id="modal-pass" class="modal hidden">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal-pass">&times;</button>
+        <form id="change-pass-form">
+          <div id="change-pass-error" class="error hidden"></div>
+          <label for="new-pass">Nueva contraseña</label>
+          <input type="password" id="new-pass" required autocomplete="new-password">
+          <button type="submit" class="main-btn">Cambiar contraseña</button>
+        </form>
+      </div>
+    </div>
+    <div id="modal-editar" class="modal hidden">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal-editar">&times;</button>
+        <form id="editar-tarea-form">
+          <div id="editar-tarea-error" class="error hidden"></div>
+          <label for="editar-texto">Tarea</label>
+          <input type="text" id="editar-texto" required>
+          <label for="editar-categoria">Categoría</label>
+          <input type="text" id="editar-categoria" required>
+          <label for="editar-estado">Estado</label>
+          <select id="editar-estado">
+            <option value="Por hacer">Por hacer</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Completada">Completada</option>
+          </select>
+          <button type="submit" class="main-btn">Guardar cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <center>
+    <footer>
+      Creado por <b>Samuel</b> 
+    </footer>
+  </center>
+  <script>
+    // --- Simulación de "backend" en localStorage ---
+    const LS_USERS = 'gestor_usuarios';
+    const LS_TAREAS = 'gestor_tareas';
+    let usuarioActual = null;
+    let tareaEditando = null;
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+    }
+    function setUsers(users) {
+      localStorage.setItem(LS_USERS, JSON.stringify(users));
+    }
+    function getTareas() {
+      return JSON.parse(localStorage.getItem(LS_TAREAS) || '[]');
+    }
+    function setTareas(tareas) {
+      localStorage.setItem(LS_TAREAS, JSON.stringify(tareas));
+    }
+
+    // --- Manejo de pestañas login/registro ---
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    loginTab.onclick = () => {
+      loginTab.classList.add('active');
+      registerTab.classList.remove('active');
+      loginForm.classList.remove('hidden');
+      registerForm.classList.add('hidden');
+    };
+    registerTab.onclick = () => {
+      registerTab.classList.add('active');
+      loginTab.classList.remove('active');
+      registerForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+    };
+
+    // --- Registro de usuario ---
+    registerForm.onsubmit = function(e) {
+      e.preventDefault();
+      const user = document.getElementById('register-user').value.trim();
+      const pass = document.getElementById('register-pass').value;
+      let users = getUsers();
+      if (users.find(u => u.user === user)) {
+        showError('register-error', 'El usuario ya existe');
+        return;
+      }
+      users.push({ user, pass });
+      setUsers(users);
+      showError('register-error', '¡Cuenta creada! Ahora inicia sesión.', true);
+      setTimeout(() => {
+        loginTab.click();
+      }, 1200);
+    };
+
+    // --- Login de usuario ---
+    loginForm.onsubmit = function(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value.trim();
+      const pass = document.getElementById('login-pass').value;
+      let users = getUsers();
+      const found = users.find(u => u.user === user && u.pass === pass);
+      if (!found) {
+        showError('login-error', 'Usuario o contraseña incorrectos');
+        return;
+      }
+      usuarioActual = user;
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('main-section').classList.remove('hidden');
+      renderTareas();
+    };
+
+    // --- Logout ---
+    document.getElementById('logout-btn').onclick = function() {
+      usuarioActual = null;
+      document.getElementById('main-section').classList.add('hidden');
+      document.getElementById('auth-section').classList.remove('hidden');
+    };
+
+    // --- Añadir tarea ---
+    document.getElementById('tarea-form').onsubmit = function(e) {
+      e.preventDefault();
+      const texto = document.getElementById('texto-tarea').value.trim();
+      const categoria = document.getElementById('categoria-tarea').value.trim();
+      const estado = document.getElementById('estado-tarea').value;
+      if (!texto || !categoria) return;
+      let tareas = getTareas();
+      tareas.push({
+        texto,
+        usuario: usuarioActual,
+        fecha: new Date().toLocaleString(),
+        categoria,
+        estado
+      });
+      setTareas(tareas);
+      renderTareas();
+      document.getElementById('tarea-form').reset();
+    };
+
+    // --- Renderizar tareas del usuario actual ---
+    function renderTareas() {
+      const lista = document.getElementById('lista-tareas');
+      lista.innerHTML = '';
+      let tareas = getTareas().filter(t => t.usuario === usuarioActual);
+      tareas.forEach((t, idx) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <b>${t.texto}</b>
+          <span style="color:#888;font-size:0.97rem;">Categoría: ${t.categoria} | Estado: ${t.estado} | Fecha: ${t.fecha}</span>
+          <div class='acciones'>
+            <button onclick='editarTarea(${idx})'>Editar</button>
+            <button onclick='eliminarTarea(${idx})'>Eliminar</button>
+          </div>
+        `;
+        lista.appendChild(li);
+      });
+    }
+
+    // --- Eliminar tarea ---
+    window.eliminarTarea = function(idx) {
+      let tareas = getTareas().filter(t => t.usuario === usuarioActual);
+      let todas = getTareas();
+      const tarea = tareas[idx];
+      todas = todas.filter((t, i) => !(t.usuario === usuarioActual && t.texto === tarea.texto && t.fecha === tarea.fecha));
+      setTareas(todas);
+      renderTareas();
+    };
+
+    // --- Editar tarea (modal tipo Notion) ---
+    window.editarTarea = function(idx) {
+      let tareas = getTareas().filter(t => t.usuario === usuarioActual);
+      tareaEditando = tareas[idx];
+      document.getElementById('editar-texto').value = tareaEditando.texto;
+      document.getElementById('editar-categoria').value = tareaEditando.categoria;
+      document.getElementById('editar-estado').value = tareaEditando.estado;
+      document.getElementById('modal-editar').classList.remove('hidden');
+    };
+    document.getElementById('close-modal-editar').onclick = function() {
+      document.getElementById('modal-editar').classList.add('hidden');
+      tareaEditando = null;
+    };
+    document.getElementById('modal-editar').onclick = function(e) {
+      if (e.target === this) {
+        document.getElementById('modal-editar').classList.add('hidden');
+        tareaEditando = null;
+      }
+    };
+    document.getElementById('editar-tarea-form').onsubmit = function(e) {
+      e.preventDefault();
+      if (!tareaEditando) return;
+      const nuevoTexto = document.getElementById('editar-texto').value.trim();
+      const nuevaCategoria = document.getElementById('editar-categoria').value.trim();
+      const nuevoEstado = document.getElementById('editar-estado').value;
+      let todas = getTareas();
+      todas = todas.map(t => {
+        if (t.usuario === usuarioActual && t.texto === tareaEditando.texto && t.fecha === tareaEditando.fecha) {
+          return { ...t, texto: nuevoTexto, categoria: nuevaCategoria, estado: nuevoEstado };
+        }
+        return t;
+      });
+      setTareas(todas);
+      renderTareas();
+      document.getElementById('modal-editar').classList.add('hidden');
+      tareaEditando = null;
+    };
+
+    // --- Cambiar contraseña ---
+    function showModalPass() {
+      document.getElementById('modal-pass').classList.remove('hidden');
+    }
+    function closeModalPass() {
+      document.getElementById('modal-pass').classList.add('hidden');
+      document.getElementById('change-pass-form').reset();
+      hideError('change-pass-error');
+    }
+    document.getElementById('show-change-pass').onclick = showModalPass;
+    document.getElementById('show-change-pass-main').onclick = showModalPass;
+    document.getElementById('close-modal-pass').onclick = closeModalPass;
+    document.getElementById('modal-pass').onclick = function(e) {
+      if (e.target === this) closeModalPass();
+    };
+    document.getElementById('change-pass-form').onsubmit = function(e) {
+      e.preventDefault();
+      const newPass = document.getElementById('new-pass').value;
+      let users = getUsers();
+      let idx = users.findIndex(u => u.user === (usuarioActual || document.getElementById('login-user').value.trim()));
+      if (idx === -1) {
+        showError('change-pass-error', 'Usuario no encontrado');
+        return;
+      }
+      users[idx].pass = newPass;
+      setUsers(users);
+      showError('change-pass-error', '¡Contraseña cambiada!', true);
+      setTimeout(closeModalPass, 1200);
+    };
+
+    // --- Errores ---
+    function showError(id, msg, ok=false) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      if (ok) el.style.color = '#388e3c';
+      else el.style.color = '';
+    }
+    function hideError(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+  </script>
+</body>
+</html> 
